@@ -138,9 +138,12 @@ class _RecaptchaWidget(Widget):
 
 
 def _encode_input_for_recaptcha(string):
-    string_bytes = string.decode(settings.DEFAULT_CHARSET)
-    string_encoded = string_bytes.encode(RECAPTCHA_CHARACTER_ENCODING)
-    return string_encoded
+    try:
+        string_bytes = string.decode(settings.DEFAULT_CHARSET)
+        string_encoded = string_bytes.encode(RECAPTCHA_CHARACTER_ENCODING)
+        return string_encoded
+    except: # non-ascii junk
+        return "bad solution"
 
 
 #}
